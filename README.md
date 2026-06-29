@@ -507,9 +507,10 @@ Run:
 
 ```bash
 npm run build
+npm run lint
 ```
 
-The build should finish without errors.
+Both commands should finish without errors.
 
 ---
 
@@ -524,4 +525,3 @@ The full submission includes:
 - README files
 - `.env.example`
 - Postman collection
-- 3–5 minute demo video

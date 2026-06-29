@@ -18,8 +18,9 @@ function DashboardPage() {
                     </h1>
 
                     <p className="mt-3 text-slate-600 dark:text-slate-300">
-                        Your workspace is ready. Next, we will build notes list,
-                        create note, edit note, note details, and profile pages.
+                        Your workspace is ready. Jump into your notes, create
+                        something new, or continue organizing what you already
+                        have.
                     </p>
 
                     <div className="mt-6">
