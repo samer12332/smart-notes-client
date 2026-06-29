@@ -2,6 +2,7 @@ import { NavLink, Outlet, useNavigate } from "react-router-dom";
 
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { logout } from "../../features/auth/authSlice";
+import ThemeToggle from "../ui/ThemeToggle";
 
 function AppLayout() {
     const navigate = useNavigate();
@@ -43,6 +44,8 @@ function AppLayout() {
                         <NavLink to="/profile" className={linkClass}>
                             Profile
                         </NavLink>
+
+                        <ThemeToggle />
 
                         <button
                             type="button"

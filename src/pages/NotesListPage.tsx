@@ -4,12 +4,15 @@ import { Link, useSearchParams } from "react-router-dom";
 import { deleteNote, getNotes } from "../api/notesApi";
 import type { NotesQueryParams } from "../features/notes/noteTypes";
 import { getErrorMessage } from "../utils/getErrorMessage";
+import { useEffect, useRef, useState } from "react";
 
 function NotesListPage() {
     const [searchParams, setSearchParams] = useSearchParams();
     const queryClient = useQueryClient();
 
     const search = searchParams.get("search") || "";
+    const [searchInput, setSearchInput] = useState(search);
+
     const category = searchParams.get("category") || "";
     const status = (searchParams.get("status") ||
         "") as NotesQueryParams["status"];
@@ -20,6 +23,16 @@ function NotesListPage() {
 
     const page = Number(searchParams.get("page") || "1");
     const limit = Number(searchParams.get("limit") || "6");
+
+    const searchTimeoutRef = useRef<number | null>(null);
+
+    useEffect(() => {
+        return () => {
+            if (searchTimeoutRef.current) {
+                window.clearTimeout(searchTimeoutRef.current);
+            }
+        };
+    }, []);
 
     const queryParams: NotesQueryParams = {
         search,
@@ -57,6 +70,18 @@ function NotesListPage() {
         }
 
         setSearchParams(nextParams);
+    }
+
+    function handleSearchChange(value: string) {
+        setSearchInput(value);
+
+        if (searchTimeoutRef.current) {
+            window.clearTimeout(searchTimeoutRef.current);
+        }
+
+        searchTimeoutRef.current = window.setTimeout(() => {
+            updateParam("search", value);
+        }, 500);
     }
 
     function handleDelete(noteId: string) {
@@ -97,9 +122,9 @@ function NotesListPage() {
                     <input
                         type="text"
                         placeholder="Search notes..."
-                        value={search}
+                        value={searchInput}
                         onChange={(event) =>
-                            updateParam("search", event.target.value)
+                            handleSearchChange(event.target.value)
                         }
                         className="rounded-lg border border-slate-300 px-3 py-2 outline-none focus:border-slate-900 dark:border-slate-700 dark:bg-slate-950 dark:focus:border-slate-300 md:col-span-2"
                     />

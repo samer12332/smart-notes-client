@@ -7,6 +7,9 @@ import App from "./App.tsx";
 import "./index.css";
 import { store } from "./app/store";
 import { queryClient } from "./app/queryClient";
+import { applyTheme, getStoredTheme } from "./utils/theme";
+
+applyTheme(getStoredTheme());
 
 createRoot(document.getElementById("root")!).render(
     <StrictMode>
